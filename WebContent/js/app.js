@@ -1,0 +1,27 @@
+/**
+ * Created by Sandeep on 01/06/14.
+ */
+
+angular.module('testRest',['ui.router','ngResource','testRest.controllers','testRest.services']);
+
+angular.module('testRest').config(function($stateProvider,$httpProvider){
+    $stateProvider.state('customers',{
+        url:'/customers',
+        templateUrl:'coupon.web/partials/customers.html',
+        controller:'CustomerListController'
+    }).state('viewCustomer',{
+       url:'/customers/:id/view',
+       templateUrl:'coupon.web/partials/customer-view.html',
+       controller:'CustomerViewController'
+    }).state('newCustomer',{
+        url:'/customers/new',
+        templateUrl:'coupon.web/partials/customer-add.html',
+        controller:'CustomerCreateController'
+    }).state('editCustomer',{
+        url:'/customers/:id/edit',
+        templateUrl:'coupon.web/partials/customer-edit.html',
+        controller:'CustomerEditController'
+    });
+}).run(function($state){
+   $state.go('customers');
+});

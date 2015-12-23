@@ -1,0 +1,14 @@
+<a ui-sref="newMovie" class="btn-primary btn-lg nodecoration">Add New Movie</a>
+<table class="table">
+    <tr>
+        <td><h3>All Customers</h3></td>
+        <td></td>
+    </tr>
+    <tr ng-repeat="customer in customers">
+        <td>{{customer.cust_NAME}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewCustomer({id:customer.id})">View</a>
+            <a class="btn btn-danger"  ng-click="deleteCustomer(customer)">Delete</a>
+        </td>
+    </tr>
+</table>
