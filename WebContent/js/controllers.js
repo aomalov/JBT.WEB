@@ -11,7 +11,8 @@ angular.module('testRest.controllers',[]).controller('CustomerListController',fu
     $scope.deleteCustomer=function(customer){
         if(popupService.showPopup('Really delete this?')){
             customer.$delete(function(){
-                $window.location.href='';
+//                $window.location.href=''; 
+            	$state.go('customers');
             });
         }
     }
