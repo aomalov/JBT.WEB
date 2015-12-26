@@ -1,18 +1,25 @@
 /**
  * Created by Sandeep on 01/06/14.
  */
-angular.module('testRest.controllers',[]).controller('CustomerListController',function($scope,$state,popupService,$window,Customer){
+angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams){
+  console.log("logon screen");
+}).controller('CustomerListController',function($scope,$state,popupService,$window,Customer){
 
-    $scope.customers=Customer.query(function() {
-        console.log($scope.customers);
-    });
-    //get({id:"1"});
+//    $scope.customers=Customer.query(function() {
+//        console.log($scope.customers);
+//    });
+	
+	  Customer.query(function(result) {
+		  $scope.customers=result;
+      }, function(status,data) {
+    	  console.log(data);
+      });
 
     $scope.deleteCustomer=function(customer){
         if(popupService.showPopup('Really delete this?')){
             customer.$delete(function(){
-//                $window.location.href=''; 
-            	$state.go('customers');
+            	//refresh the customer list
+            	$scope.customers=Customer.query();
             });
         }
     }

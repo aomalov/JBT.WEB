@@ -3,6 +3,7 @@
  */
 package com.jbt.jsmith.rest;
 
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -18,7 +19,8 @@ public class CouponErrorMapper  implements ExceptionMapper<CouponSystemException
 
     @Override
     public Response toResponse(CouponSystemException cause) {
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new CouponRestErrorMessage(cause.getMessage())).build();
+    	GenericEntity<CouponRestErrorMessage> entity=new GenericEntity<CouponRestErrorMessage>(new CouponRestErrorMessage(cause.getMessage())){};
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(entity).build();
     }
 
 }

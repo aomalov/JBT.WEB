@@ -5,7 +5,7 @@
 angular.module('testRest.services',[]).factory('Customer',function($resource){
     return $resource('coupon.web/rest/customers/:id',{id:'@id'},{
         update: {
-            method: 'PUT'
+            method: 'PUT' , params:{id:''}
         }
     });
 }).service('popupService',function($window){

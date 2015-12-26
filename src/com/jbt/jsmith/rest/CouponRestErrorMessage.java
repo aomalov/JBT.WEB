@@ -3,6 +3,7 @@
  */
 package com.jbt.jsmith.rest;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -10,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  *Error class utility - translation to JSON to web client
  */
-@XmlRootElement
+@XmlRootElement(name="CouponRestErrorMessage")
 public class CouponRestErrorMessage {
 	
 	String messageText;
@@ -20,6 +21,7 @@ public class CouponRestErrorMessage {
 		this.messageText = messageText;
 	}
 
+	@XmlElement
 	public String getMessageText() {
 		return messageText;
 	}

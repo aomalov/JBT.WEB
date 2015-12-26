@@ -21,7 +21,7 @@ import com.jbt.jsmith.dto.Customer;
 import com.jbt.jsmith.facade.AdminFacade;
 
 @Path("/customers")
-public class CustormerRestResource {
+public class CustomerRestResource {
 	
 	@GET
 	@Path("/")

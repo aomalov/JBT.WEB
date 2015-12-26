@@ -5,7 +5,11 @@
 angular.module('testRest',['ui.router','ngResource','testRest.controllers','testRest.services']);
 
 angular.module('testRest').config(function($stateProvider,$httpProvider){
-    $stateProvider.state('customers',{
+    $stateProvider.state('login',{
+        url:'/login',
+        templateUrl:'coupon.web/partials/login.html',
+        controller:'LoginController'
+    }).state('customers',{
         url:'/customers',
         templateUrl:'coupon.web/partials/customers.html',
         controller:'CustomerListController'
