@@ -27,10 +27,14 @@ public class CustomerRestResource {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Customer> getCustomers(@Context HttpServletRequest httpServletRequest) throws CouponSystemException {
+		AdminFacade admin;
 		
-		CouponSystem theCouponius=CouponSystem.getInstance();
-		AdminFacade admin=(AdminFacade)theCouponius.login("Admin", "1234", ClientType.Admin);
-		
+		try {
+			admin = (AdminFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+		}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Administrator for this operation");
+		}
 		return admin.getAllCustomers();
 	}
 	
@@ -38,19 +42,28 @@ public class CustomerRestResource {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Customer getCustomer(@PathParam("id") long ID,@Context HttpServletRequest httpServletRequest) throws CouponSystemException{
+		AdminFacade admin;
 		
-		CouponSystem theCouponius=CouponSystem.getInstance();
-		AdminFacade admin=(AdminFacade)theCouponius.login("Admin", "1234", ClientType.Admin);
-		
+		try {
+			admin = (AdminFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+		}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Administrator for this operation");
+		}
 		return admin.getCustomer(ID);
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public void deleteCustomer(@PathParam("id") long ID,@Context HttpServletRequest httpServletRequest) throws CouponSystemException{
+		AdminFacade admin;
 		
-		CouponSystem theCouponius=CouponSystem.getInstance();
-		AdminFacade admin=(AdminFacade)theCouponius.login("Admin", "1234", ClientType.Admin);
+		try {
+			admin = (AdminFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+		}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Administrator for this operation");
+		}
 		
 		admin.removeCustomer(admin.getCustomer(ID));
 	}
@@ -59,9 +72,14 @@ public class CustomerRestResource {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void createCustomer(Customer newCustomer,@Context HttpServletRequest httpServletRequest) throws CouponSystemException{
+		AdminFacade admin;
 		
-		CouponSystem theCouponius=CouponSystem.getInstance();
-		AdminFacade admin=(AdminFacade)theCouponius.login("Admin", "1234", ClientType.Admin);
+		try {
+			admin = (AdminFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+		}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Administrator for this operation");
+		}
 		
 		admin.createCustomer(newCustomer);
 	}
@@ -70,9 +88,14 @@ public class CustomerRestResource {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateCustomer(Customer newCustomer,@Context HttpServletRequest httpServletRequest) throws CouponSystemException{
+		AdminFacade admin;
 		
-		CouponSystem theCouponius=CouponSystem.getInstance();
-		AdminFacade admin=(AdminFacade)theCouponius.login("Admin", "1234", ClientType.Admin);
+		try {
+			admin = (AdminFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+		}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Administrator for this operation");
+		}
 		
 		admin.updateCustomer(newCustomer);
 	}

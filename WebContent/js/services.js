@@ -12,4 +12,9 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
     this.showPopup=function(message){
         return $window.confirm(message);
     }
+}).service('restResponseService', function() {
+	   
+    this.messageText = "Welcome to Couponius !";
+    this.messageType = "success";
+    
 });

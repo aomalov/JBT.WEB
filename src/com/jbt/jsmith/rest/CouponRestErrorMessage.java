@@ -15,10 +15,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CouponRestErrorMessage {
 	
 	String messageText;
+	String messageType;
 
-	public CouponRestErrorMessage(String messageText) {
+	public CouponRestErrorMessage(String messageText,String messageType) {
 		super();
 		this.messageText = messageText;
+		this.messageType = messageType;
 	}
 
 	@XmlElement
@@ -28,6 +30,21 @@ public class CouponRestErrorMessage {
 
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
+	}
+
+	/**
+	 * @return the messageType
+	 */
+	@XmlElement
+	public String getMessageType() {
+		return messageType;
+	}
+
+	/**
+	 * @param messageType the messageType to set
+	 */
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
 	}
 
 	/**

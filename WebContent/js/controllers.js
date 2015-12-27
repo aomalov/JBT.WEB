@@ -3,7 +3,24 @@
  */
 angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams){
   console.log("logon screen");
-}).controller('CustomerListController',function($scope,$state,popupService,$window,Customer){
+  
+}).controller('restResponseController', ['$scope', 'restResponseService', function($scope, restResponseService) {
+    
+    $scope.$watch(function () { return restResponseService.messageText; }, function() {
+      $scope.messageText = restResponseService.messageText;
+      $scope.messageType = restResponseService.messageType;
+    });
+    
+    $scope.$watch('messageText', function() {
+       restResponseService.messageText = $scope.messageText; 
+    });
+
+    // $scope.$on('eventRestResponse', function() {
+    //   $scope.messageText = restResponseService.messageText;
+    //   $scope.messageType = restResponseService.messageType;    
+    //  });
+    
+}]).controller('CustomerListController',function($scope,$state,popupService,$window,Customer){
 
 //    $scope.customers=Customer.query(function() {
 //        console.log($scope.customers);
@@ -11,8 +28,8 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	
 	  Customer.query(function(result) {
 		  $scope.customers=result;
-      }, function(status,data) {
-    	  console.log(data);
+      }, function(response) {
+    	  console.log(response.data);
       });
 
     $scope.deleteCustomer=function(customer){
@@ -28,13 +45,17 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 
     $scope.customer=Customer.get({id:$stateParams.id});
 
-}).controller('CustomerCreateController',function($scope,$state,$stateParams,Customer){
+}).controller('CustomerCreateController',function($scope,$state,$stateParams,Customer,restResponseService){
 
     $scope.customer=new Customer();
 
     $scope.addCustomer=function(){
         $scope.customer.$save(function(){
             $state.go('customers');
+        },function(response){
+        	console.log(response.data);
+        	restResponseService.messageText = response.data.messageText;
+        	restResponseService.messageType = response.data.messageType;        	
         });
     }
 
@@ -43,6 +64,8 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
     $scope.updateCustomer=function(){
         $scope.customer.$update(function(){
             $state.go('customers');
+        },function(response){
+        	console.log(response.data);
         });
     };
 
