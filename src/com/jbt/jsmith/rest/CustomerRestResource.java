@@ -14,8 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.jbt.jsmith.CouponSystem;
-import com.jbt.jsmith.CouponSystem.ClientType;
 import com.jbt.jsmith.CouponSystemException;
 import com.jbt.jsmith.dto.Customer;
 import com.jbt.jsmith.facade.AdminFacade;
