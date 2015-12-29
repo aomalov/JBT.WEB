@@ -20,16 +20,14 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
     //   $scope.messageType = restResponseService.messageType;    
     //  });
     
-}]).controller('CustomerListController',function($scope,$state,popupService,$window,Customer){
+}]).controller('CustomerListController',function($scope,$state,popupService,$window,Customer, restResponseService){
 
-//    $scope.customers=Customer.query(function() {
-//        console.log($scope.customers);
-//    });
-	
 	  Customer.query(function(result) {
 		  $scope.customers=result;
       }, function(response) {
     	  console.log(response.data);
+      	  restResponseService.messageText = response.data.messageText;
+    	  restResponseService.messageType = response.data.messageType;  
       });
 
     $scope.deleteCustomer=function(customer){
@@ -59,13 +57,15 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
         });
     }
 
-}).controller('CustomerEditController',function($scope,$state,$stateParams,Customer){
+}).controller('CustomerEditController',function($scope,$state,$stateParams,Customer,restResponseService){
 
     $scope.updateCustomer=function(){
         $scope.customer.$update(function(){
             $state.go('customers');
         },function(response){
         	console.log(response.data);
+        	restResponseService.messageText = response.data.messageText;
+        	restResponseService.messageType = response.data.messageType;  
         });
     };
 
