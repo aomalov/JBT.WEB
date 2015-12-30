@@ -7,7 +7,8 @@ angular.module('testRest',['ui.bootstrap','ui.router','ngResource','testRest.con
 angular.module('testRest').config(function($stateProvider,$httpProvider){
     $stateProvider.state('guest',{
         url:'/welcome',
-        templateUrl:'coupon.web/partials/welcome.html'
+        templateUrl:'coupon.web/partials/welcome.html',
+        controller:'LoginController'
     }).state('login',{
         url:'/login',
         templateUrl:'coupon.web/partials/login.html',

@@ -1,8 +1,10 @@
 /**
  * Created by Sandeep on 01/06/14.
  */
-angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams){
+angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams,$state){
   console.log("logon screen");
+  colsole.log($state);
+  $scope.onlineUser="Guest";
   
 }).controller('restResponseController', ['$scope', 'restResponseService', function($scope, restResponseService) {
     
