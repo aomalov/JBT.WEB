@@ -14,7 +14,14 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
     }
 }).service('restResponseService', function() {
 	   
-    this.messageText = "Welcome to Couponius !";
+    this.messageText = "";
     this.messageType = "success";
+    
+    this.applyAlert = function(restJsonResponse) {
+        this.messageText = restJsonResponse.messageText;
+        this.messageType = restJsonResponse.messageType;
+        if(restJsonResponse.redirectUrl)
+        	window.location.replace(restJsonResponse.redirectUrl);
+    };
     
 });

@@ -26,8 +26,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 		  $scope.customers=result;
       }, function(response) {
     	  console.log(response.data);
-      	  restResponseService.messageText = response.data.messageText;
-    	  restResponseService.messageType = response.data.messageType;  
+    	  restResponseService.applyAlert(response.data);
       });
 
     $scope.deleteCustomer=function(customer){
@@ -52,8 +51,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
             $state.go('customers');
         },function(response){
         	console.log(response.data);
-        	restResponseService.messageText = response.data.messageText;
-        	restResponseService.messageType = response.data.messageType;        	
+        	restResponseService.applyAlert(response.data);
         });
     }
 
@@ -64,8 +62,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
             $state.go('customers');
         },function(response){
         	console.log(response.data);
-        	restResponseService.messageText = response.data.messageText;
-        	restResponseService.messageType = response.data.messageType;  
+        	restResponseService.applyAlert(response.data);
         });
     };
 

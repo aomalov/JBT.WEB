@@ -13,8 +13,11 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Response;
 
 import com.jbt.jsmith.CouponSystemException;
+
+import sun.security.krb5.SCDynamicStoreConfig;
 
 /**
  * Servlet Filter implementation class SessionFilter
@@ -32,12 +35,23 @@ public class SessionFilter implements Filter {
 		if(session==null) failedRequest=true;
 		else if (session.getAttribute("userFacade")==null) failedRequest=true;
 		
-		if(failedRequest)
-		{
-			//((HttpServletResponse)response)
-			//sendRedirect("/coupon.web/index.html#/login");
-			//return;
-			throw new ServletException("You must login first !");
+		if(failedRequest) {
+			// Set up your response here
+		    HttpServletResponse hres = (HttpServletResponse) response;
+		    String redirectUrl = ((HttpServletRequest)request).getContextPath()+ "/index.html#/login";
+		    hres.setContentType("text/json; charset=UTF-8");
+		    hres.setStatus(505);
+
+		    PrintWriter out = hres.getWriter();
+
+			out.println("{"+
+					"\"messageText\":"+"\"You must log in!\","+  
+					"\"messageType\":"+"\"danger\","+
+					"\"redirectUrl\":"+"\""+redirectUrl+"\""+
+			   "}");
+
+		    out.flush();
+		    out.close();
 		}
 		else
 		  chain.doFilter(request, response); 
