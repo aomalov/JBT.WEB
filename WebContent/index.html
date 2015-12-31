@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="coupon.web/css/app.css"/>
 </head>
 <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation" ng-controller="NavbarMenuController">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-click="isNavbarCollapsed=!isNavbarCollapsed">
@@ -24,9 +24,23 @@
                 <a class="navbar-brand" ui-sref="customers">The App</a>
             </div>
             <div class="collapse navbar-collapse" uib-collapse="!isNavbarCollapsed" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="login">Sign in  <i class="fa fa-user fa-1x"></i></a></li>
+            
+                <ul class="nav navbar-nav" ng-show="clientType=='Admin'">
+					<li class="dropdown" uib-dropdown>
+	                  <a href="#" uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Companies <span class="caret"></span></a>
+	                  <ul class="dropdown-menu">
+	                    <li><a ui-sref="customers">List Companies</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a ui-sref="newCustomer">Add Company</a></li>
+	                  </ul>
+	                </li>
                 </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-show="clientType=='Guest'"><a ui-sref="login">Sign in  <i class="fa fa-user fa-1x"></i></a></li>
+                    <li ng-show="clientType!='Guest'"><a hef="/coupon.web/rest/logout">Sign out  <i class="fa fa-sign-out fa-1x"></i></a></li>
+                </ul>
+                
             </div>
         </div>
     </nav>

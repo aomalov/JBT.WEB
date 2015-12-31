@@ -1,26 +1,45 @@
 /**
  * Created by Sandeep on 01/06/14.
  */
-angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams,$state){
+angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams,clientAuthTypeService){
   console.log("logon screen");
-  colsole.log($state);
-  $scope.onlineUser="Guest";
+  if($stateParams.clientType) {
+	  console.log($stateParams.clientType);
+	  $scope.onlineUser=$stateParams.clientType;
+	  clientAuthTypeService.setClientType($stateParams.clientType);
+  }
+  else { 
+	  $scope.onlineUser="Guest";
+	  clientAuthTypeService.setClientType("Guest");
+  }
   
+}).controller('NavbarMenuController',function($scope,clientAuthTypeService){
+	
+	  console.log("setting up nav bar");
+	  
+      console.log(clientAuthTypeService.clientType);
+      
+      $scope.clientType = 'Guest';
+      
+      $scope.$on('eventClientTypeChanged', function() {
+          $scope.clientType = clientAuthTypeService.clientType;    
+      });
+	  
 }).controller('restResponseController', ['$scope', 'restResponseService', function($scope, restResponseService) {
     
-    $scope.$watch(function () { return restResponseService.messageText; }, function() {
-      $scope.messageText = restResponseService.messageText;
-      $scope.messageType = restResponseService.messageType;
-    });
+//    $scope.$watch(function () { return restResponseService.messageText; }, function() {
+//      $scope.messageText = restResponseService.messageText;
+//      $scope.messageType = restResponseService.messageType;
+//    });
     
-    $scope.$watch('messageText', function() {
+	$scope.$watch('messageText', function() {
        restResponseService.messageText = $scope.messageText; 
     });
 
-    // $scope.$on('eventRestResponse', function() {
-    //   $scope.messageText = restResponseService.messageText;
-    //   $scope.messageType = restResponseService.messageType;    
-    //  });
+    $scope.$on('eventRestResponse', function() {
+      $scope.messageText = restResponseService.messageText;
+      $scope.messageType = restResponseService.messageType;    
+    });
     
 }]).controller('CustomerListController',function($scope,$state,popupService,$window,Customer, restResponseService){
 
@@ -28,7 +47,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 		  $scope.customers=result;
       }, function(response) {
     	  console.log(response.data);
-    	  restResponseService.applyAlert(response.data);
+    	  restResponseService.applyAlert(response.data,$scope);
       });
 
     $scope.deleteCustomer=function(customer){
@@ -53,7 +72,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
             $state.go('customers');
         },function(response){
         	console.log(response.data);
-        	restResponseService.applyAlert(response.data);
+        	restResponseService.applyAlert(response.data,$scope);
         });
     }
 
@@ -64,7 +83,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
             $state.go('customers');
         },function(response){
         	console.log(response.data);
-        	restResponseService.applyAlert(response.data);
+        	restResponseService.applyAlert(response.data,$scope);
         });
     };
 
