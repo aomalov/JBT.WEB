@@ -2,7 +2,7 @@
  * Created by Sandeep on 01/06/14.
  */
 
-angular.module('testRest',['ui.bootstrap','ui.router','ngResource','testRest.controllers','testRest.services']);
+angular.module('testRest',['ui.bootstrap','ui.router','ui.bootstrap.showErrors','ngResource','testRest.controllers','testRest.services']);
 
 angular.module('testRest').config(function($stateProvider,$httpProvider){
     $stateProvider.state('guest',{
