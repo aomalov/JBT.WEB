@@ -8,7 +8,9 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -22,11 +24,11 @@ import com.jbt.jsmith.facade.CouponClientFacade;
  * @author andrew
  *
  */
-@Path("/login")
+@Path("/")
 public class LoginRestResourse {
 
 	@POST 
-	@Path("/")
+	@Path("login")
 	public void doLogin(@FormParam("userName") String userName,
 						@FormParam("password") String password,
 						@FormParam("clientType") String clientType,
@@ -55,5 +57,17 @@ public class LoginRestResourse {
 		httpServletResponse.sendRedirect("/coupon.web/index.html#/welcome?clientType="+clientType);
 	}
 	
+	
+	@GET
+	@Path("logout")
+	public void doLogout(@Context HttpServletRequest httpServletRequest,
+						@Context HttpServletResponse httpServletResponse) throws IOException {
+		HttpSession session = httpServletRequest.getSession(false);
+		if(session!=null) {
+			session.setAttribute("userFacade", null);
+			session.invalidate();
+		}
+		httpServletResponse.sendRedirect("/coupon.web/index.html#/welcome?clientType=Guest");
+	}
 	
 }
