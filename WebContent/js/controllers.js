@@ -13,24 +13,20 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	  clientAuthTypeService.setClientType("Guest");
   }
   
-}).controller('NavbarMenuController',function($scope,clientAuthTypeService){
+}).controller('NavbarMenuController',function($scope,$cookies,clientAuthTypeService){
 	
 	  console.log("setting up nav bar");
 	  
       console.log(clientAuthTypeService.clientType);
       
-      $scope.clientType = 'Guest';
+      //TODO read from cookie
+      $scope.clientType = ($cookies.get('clientType')) ? $cookies.get('clientType') :'Guest';
       
       $scope.$on('eventClientTypeChanged', function() {
           $scope.clientType = clientAuthTypeService.clientType;    
       });
 	  
 }).controller('restResponseController', ['$scope', 'restResponseService', function($scope, restResponseService) {
-    
-//    $scope.$watch(function () { return restResponseService.messageText; }, function() {
-//      $scope.messageText = restResponseService.messageText;
-//      $scope.messageType = restResponseService.messageType;
-//    });
     
 	$scope.$watch('messageText', function() {
        restResponseService.messageText = $scope.messageText; 
@@ -41,7 +37,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       $scope.messageType = restResponseService.messageType;    
     });
     
-}]).controller('CustomerListController',function($scope,$state,popupService,$window,Customer, restResponseService){
+}]).controller('CustomerListController',function($scope,$state,Customer, restResponseService, modalConfirmationService){
 
 	  Customer.query(function(result) {
 		  $scope.customers=result;
@@ -50,13 +46,16 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
     	  restResponseService.applyAlert(response.data,$scope);
       });
 
-    $scope.deleteCustomer=function(customer){
-        if(popupService.showPopup('Really delete this?')){
-            customer.$delete(function(){
-            	//refresh the customer list
-            	$scope.customers=Customer.query();
-            });
-        }
+      $scope.deleteCustomer=function(customer){
+    	var modalInstance = modalConfirmationService.showDialog(customer.cust_NAME);
+    		
+    	modalInstance.result.then(function () {
+    		  console.log("to deletion");
+    	      customer.$delete(function(){
+              	//refresh the customer list
+              	$scope.customers=Customer.query();
+              });
+    	    });	
     }
 
 }).controller('CustomerViewController',function($scope,$stateParams,Customer){
@@ -92,4 +91,17 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
     };
 
     $scope.loadCustomer();
+    
+}).controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, toDelete) {
+
+	  $scope.toDelete = toDelete;
+	
+	  $scope.ok = function () {
+	    $uibModalInstance.close("ok");
+	  };
+
+	  $scope.cancel = function () {
+	    $uibModalInstance.dismiss('cancel');
+	  };
+	  
 });
