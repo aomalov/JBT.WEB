@@ -8,6 +8,12 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
             method: 'PUT' , params:{id:''}
         }
     });
+}).factory('CompanyCoupon',function($resource){
+    return $resource('coupon.web/rest/company/coupons/:id',{id:'@id'},{
+        update: {
+            method: 'PUT' , params:{id:''}
+        }
+    });
 }).service('popupService',function($window){
     this.showPopup=function(message){
         return $window.confirm(message);

@@ -92,7 +92,11 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 
     $scope.loadCustomer();
     
-}).controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, toDelete) {
+})
+
+//TODO coupon controller code + coupon HTML forms
+
+.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, toDelete) {
 
 	  $scope.toDelete = toDelete;
 	
