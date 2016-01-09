@@ -39,20 +39,6 @@ public class LoginRestResourse {
 		
 		CouponClientFacade aFacade = theCouponius.login(userName, password, ClientType.valueOf(clientType));
 		httpServletRequest.getSession(true).setAttribute("userFacade", aFacade);
-		
-//	    String redirectUrl = httpServletRequest.getContextPath()+ "/index.html";
-//	    httpServletResponse.setContentType("text/json; charset=UTF-8");
-//
-//	    PrintWriter out = httpServletResponse.getWriter();
-//
-//		out.println("{"+
-//				"\"messageText\":"+"\"You logged in as "+clientType+"!\","+  
-//				"\"messageType\":"+"\"success\","+
-//				"\"redirectUrl\":"+"\""+redirectUrl+"\""+
-//		   "}");
-//
-//	    out.flush();
-//	    out.close();
 	    
 		httpServletResponse.sendRedirect("/coupon.web/index.html#/welcome?clientType="+clientType);
 	}

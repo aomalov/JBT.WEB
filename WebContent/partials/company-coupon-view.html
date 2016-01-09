@@ -1,0 +1,20 @@
+<table class="table">
+    <tr>
+        <td><h3>Details for {{coupon.title}}</h3></td>
+    </tr>
+    <tr>
+        <td>Message : {{coupon.message}}</td>
+    </tr>
+    <tr>
+        <td>Price : {{coupon.price}}</td>
+    </tr>
+    <tr>
+        <td>Amount : {{coupon.amount}}</td>
+    </tr>
+    <tr>
+        <td>Validity period : {{coupon.start_DATE  }}   -   {{coupon.end_DATE | date:'dd-MM-yyyy'}}</td>
+    </tr>
+</table>
+<div>
+    <a class="btn btn-primary" ui-sref="editCoupon({id:coupon.id})">Edit</a>
+</div>

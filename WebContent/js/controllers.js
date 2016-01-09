@@ -1,5 +1,5 @@
 /**
- * Created by Sandeep on 01/06/14.
+ * Inspired by Sandeep on 01/06/14.
  */
 angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams,clientAuthTypeService){
   console.log("logon screen");
@@ -12,14 +12,12 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	  $scope.onlineUser="Guest";
 	  clientAuthTypeService.setClientType("Guest");
   }
-  
 }).controller('NavbarMenuController',function($scope,$cookies,clientAuthTypeService){
 	
 	  console.log("setting up nav bar");
 	  
       console.log(clientAuthTypeService.clientType);
       
-      //TODO read from cookie
       $scope.clientType = ($cookies.get('clientType')) ? $cookies.get('clientType') :'Guest';
       
       $scope.$on('eventClientTypeChanged', function() {
@@ -37,7 +35,10 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       $scope.messageType = restResponseService.messageType;    
     });
     
-}]).controller('CustomerListController',function($scope,$state,Customer, restResponseService, modalConfirmationService){
+}])
+
+// ADMIN - CUSTOMERS ================================================================
+.controller('CustomerListController',function($scope,$state,Customer, restResponseService, modalConfirmationService){
 
 	  Customer.query(function(result) {
 		  $scope.customers=result;
@@ -94,9 +95,65 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
     
 })
 
-//TODO coupon controller code + coupon HTML forms
+// COMPANY-COUPONS ================================================================
+.controller('CompanyCouponListController',function($scope,$state,CompanyCoupon, restResponseService, modalConfirmationService){
 
-.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, toDelete) {
+	CompanyCoupon.query(function(result) {
+		  $scope.coupons=result;
+    }, function(response) {
+  	  console.log(response.data);
+  	  restResponseService.applyAlert(response.data,$scope);
+    });
+
+    $scope.deleteCoupon=function(coupon){
+  	var modalInstance = modalConfirmationService.showDialog(coupon.title);
+  		
+  	modalInstance.result.then(function () {
+  		  console.log("to deletion");
+  	      coupon.$delete(function(){
+            	//refresh the coupons list
+            	$scope.coupons=CompanyCoupon.query();
+            });
+  	    });	
+  }
+
+}).controller('CompanyCouponViewController',function($scope,$stateParams,CompanyCoupon){
+
+  $scope.coupon=CompanyCoupon.get({id:$stateParams.id});
+
+}).controller('CouponCreateController',function($scope,$state,$stateParams,CompanyCoupon,restResponseService){
+
+  $scope.coupon=new CompanyCoupon();
+
+  $scope.addCoupon=function(){
+	  console.log($scope.coupon);
+      $scope.coupon.$save(function(){
+          $state.go('company-coupons');
+      },function(response){
+      	console.log(response.data);
+      	restResponseService.applyAlert(response.data,$scope);
+      });
+  }
+
+}).controller('CouponEditController',function($scope,$state,$stateParams,CompanyCoupon,restResponseService){
+
+  $scope.updateCoupon=function(){
+	  console.log($scope.coupon);
+      $scope.coupon.$update(function(){
+          $state.go('company-coupons');
+      },function(response){
+      	console.log(response.data);
+      	restResponseService.applyAlert(response.data,$scope);
+      });
+  };
+
+  $scope.loadCoupon=function(){
+      $scope.coupon=CompanyCoupon.get({id:$stateParams.id});
+  };
+
+  $scope.loadCoupon();
+  
+}).controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, toDelete) {
 
 	  $scope.toDelete = toDelete;
 	

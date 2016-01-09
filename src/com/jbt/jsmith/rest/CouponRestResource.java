@@ -88,6 +88,7 @@ public class CouponRestResource {
 	public void updateCoupon(Coupon newCoupon,@Context HttpServletRequest httpServletRequest) throws CouponSystemException{
 		CompanyFacade company;
 		
+		System.out.println(newCoupon);
 		try {
 			company = (CompanyFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
 		}

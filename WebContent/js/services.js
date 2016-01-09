@@ -1,5 +1,5 @@
 /**
- * Created by Sandeep on 01/06/14.
+ * Inspired by Sandeep on 01/06/14.
  */
 
 angular.module('testRest.services',[]).factory('Customer',function($resource){
@@ -14,10 +14,6 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
             method: 'PUT' , params:{id:''}
         }
     });
-}).service('popupService',function($window){
-    this.showPopup=function(message){
-        return $window.confirm(message);
-    }
 }).service('restResponseService', function() {
 	   
     this.messageText = "";
@@ -39,4 +35,19 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
     	this.clientType = clientType;
     	$rootScope.$broadcast("eventClientTypeChanged");
     };
+}).service('modalConfirmationService',function($uibModal){
+	
+	this.showDialog = function (toDeleteHeader) {
+		return $uibModal.open({
+		      animation: true,
+		      templateUrl: 'coupon.web/partials/modal-confirmation.html',
+		      controller: 'ModalInstanceCtrl',
+		      size: 'sm',
+		      resolve: {
+		        toDelete: function () {
+		            return toDeleteHeader;
+		        }
+		      }
+		    });
+	}
 });

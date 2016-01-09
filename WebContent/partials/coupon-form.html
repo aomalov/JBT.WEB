@@ -1,0 +1,71 @@
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="title" class="col-sm-2 control-label">Coupon Title</label>
+    <div class="col-sm-10">
+        <input type="text" name="TITLE" ng-model="coupon.title" class="form-control" id="title" placeholder="Coupon Title" required/>
+        <span ng-class="['glyphicon', couponForm.TITLE.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="couponForm.TITLE.$error.required">The coupon title is required</p>
+    </div>
+</div>
+
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="message" class="col-sm-2 control-label">Coupon Message</label>
+    <div class="col-sm-10">
+        <input type="text" name="MESSAGE" ng-model="coupon.message" class="form-control" id="message" placeholder="Coupon Message" required/>
+        <span ng-class="['glyphicon', couponForm.MESSAGE.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="couponForm.MESSAGE.$error.required">The coupon message is required</p>
+    </div>
+</div>
+
+<div class="form-group">
+  <label for="couponType" class="col-sm-2 control-label">Coupon Type</label>
+  <div class="col-sm-10">
+      <select class="form-control" id="couponType" placeholder="Coupon Type" name="TYPE" ng-model="coupon.type">
+        <option value="RESTAURANT">RESTAURANT</option>
+        <option value="TRAVEL">TRAVEL</option>
+        <option value="HEALTHCARE">HEALTHCARE</option>
+      </select>            
+  </div>
+</div>            
+
+
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="price" class="col-sm-2 control-label">Coupon Price</label>
+    <div class="col-sm-10">
+        <input type="number" name="PRICE" ng-model="coupon.price" class="form-control" id="price" placeholder="Coupon Price" required/>
+        <span ng-class="['glyphicon', couponForm.PRICE.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="couponForm.PRICE.$error.required">The coupon price is required</p>
+    </div>
+</div>
+
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="amount" class="col-sm-2 control-label">Coupon Amount</label>
+    <div class="col-sm-10">
+        <input type="number" name="AMOUNT" ng-model="coupon.amount" class="form-control" id="amount" placeholder="Coupon Amount" required/>
+        <span ng-class="['glyphicon', couponForm.AMOUNT.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="couponForm.AMOUNT.$error.required">The coupon amount is required</p>
+    </div>
+</div>
+
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="startDate" class="col-sm-2 control-label">Coupon Start Date</label>
+    <div class="col-sm-10">
+        <input type="text" name="START_DATE" ng-model="coupon.start_DATE" class="form-control" id="startDate" placeholder="Coupon Start Date" required/>
+        <span ng-class="['glyphicon', couponForm.START_DATE.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="couponForm.START_DATE.$error.required">The coupon start date is required</p>
+    </div>
+</div>
+
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="endDate" class="col-sm-2 control-label">Coupon End Date</label>
+    <div class="col-sm-10">
+        <input type="text" name="END_DATE" ng-model="coupon.end_DATE" class="form-control" id="endDate" placeholder="Coupon End Date" required/>
+        <span ng-class="['glyphicon', couponForm.END_DATE.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="couponForm.END_DATE.$error.required">The coupon end date is required</p>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" ng-class="['btn btn-primary', couponForm.$valid ? '' : 'disabled']" value="Save"/>
+    </div>
+</div>

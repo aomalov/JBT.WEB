@@ -1,5 +1,5 @@
 /**
- * Created by Sandeep on 01/06/14.
+ * Inspired by Sandeep on 01/06/14.
  */
 
 angular.module('testRest',['ui.bootstrap','ui.router','ui.bootstrap.showErrors','ngResource','ngCookies','testRest.controllers','testRest.services']);
@@ -13,7 +13,10 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         url:'/login',
         templateUrl:'coupon.web/partials/login.html',
         controller:'LoginController'
-    }).state('customers',{
+    })
+    
+    //ADMIN-CUSTOMERS
+    .state('customers',{
         url:'/customers',
         templateUrl:'coupon.web/partials/customers.html',
         controller:'CustomerListController'
@@ -29,13 +32,18 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         url:'/customers/:id/edit',
         templateUrl:'coupon.web/partials/customer-edit.html',
         controller:'CustomerEditController'
-    }).state('company-coupons',{
+    })
+    //TODO  ADMIN-COMPANIES
+    
+    
+    //COMPANY-COUPONS
+    .state('company-coupons',{
         url:'/company/coupons',
         templateUrl:'coupon.web/partials/company-coupons.html',
         controller:'CompanyCouponListController'
     }).state('viewCompanyCoupon',{
        url:'/company/coupons/:id/view',
-       templateUrl:'coupon.web/partials/coupon-view.html',
+       templateUrl:'coupon.web/partials/company-coupon-view.html',
        controller:'CompanyCouponViewController'
     }).state('newCoupon',{
         url:'/company/coupons/new',
@@ -46,6 +54,8 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         templateUrl:'coupon.web/partials/coupon-edit.html',
         controller:'CouponEditController'
     });
+    
+   //TODO CUSTOMER-COUPONS 
 }).run(function($state){
    $state.go('guest');
 });

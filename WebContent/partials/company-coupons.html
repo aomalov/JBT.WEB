@@ -1,0 +1,18 @@
+
+<table class="table">
+	<tr>
+		<td></td>
+	    <td><a ui-sref="newCoupon" class="btn-primary btn-lg">Add New Coupon</a></td>
+	</tr>
+    <tr>
+        <td><h3>All Coupons</h3></td>
+        <td></td>
+    </tr> 
+    <tr ng-repeat="coupon in coupons">
+        <td>{{coupon.title}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewCompanyCoupon({id:coupon.id})">View</a>
+            <a class="btn btn-danger"  ng-click="deleteCoupon(coupon)">Delete</a>
+        </td>
+    </tr>
+</table>
