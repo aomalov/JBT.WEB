@@ -135,7 +135,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       });
   }
 
-}).controller('CouponEditController',function($scope,$state,$stateParams,CompanyCoupon,restResponseService){
+}).controller('CouponEditController',function($scope,$state,$stateParams,$log,CompanyCoupon,restResponseService,uiUploader){
 
   $scope.updateCoupon=function(){
 	  console.log($scope.coupon);
@@ -149,6 +149,26 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 
   $scope.loadCoupon=function(){
       $scope.coupon=CompanyCoupon.get({id:$stateParams.id});
+  };
+  
+  $scope.btn_uploadRemove = function(file) {
+      $log.info('deleting=' + file);
+      uiUploader.removeFile(file);
+  };
+
+  $scope.btn_doUpload = function() {
+      $log.info('uploading...');
+      uiUploader.startUpload({
+          url: 'coupon.web/rest/company/coupons/'+$scope.coupon.id+'/imgupload',
+//          concurrency: 2,
+//          onProgress: function(file) {
+//              $log.info(file.name + '=' + file.humanSize);
+//              $scope.$apply();
+//          },
+          onCompleted: function(file, response) {
+              $log.info(file + 'response' + response);
+          }
+      });
   };
 
   $scope.loadCoupon();

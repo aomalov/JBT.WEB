@@ -64,6 +64,18 @@
     </div>
 </div>
 
+<div class="form-group" ng-show="coupon.id>0">
+    <label for="image" class="col-sm-2 control-label">Coupon Image</label>
+    <div class="col-sm-10">
+    	<span class="file-input btn btn-info btn-file">
+    		Browse coupon logo image <i class="fa fa-picture-o fa-1x"></i>
+    		<input type="file">
+		</span>
+		<button class="btn btn-warning btn-sm" ng-click="btn_doUpload()">Upload</button>
+        <button class="btn btn-warning btn-sm" ng-click="btn_uploadRemove()">Remove</button>
+    </div>
+</div>
+
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
         <input type="submit" ng-class="['btn btn-primary', couponForm.$valid ? '' : 'disabled']" value="Save"/>

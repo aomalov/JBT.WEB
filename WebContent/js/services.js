@@ -27,12 +27,13 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
         	window.location.replace(restJsonResponse.redirectUrl);
     };
     
-}).service('clientAuthTypeService',function($rootScope){
+}).service('clientAuthTypeService',function($rootScope,$cookies){
 	
     this.clientType = "Guest";
     
     this.setClientType = function(clientType) {
     	this.clientType = clientType;
+    	$cookies.put('clientType',clientType);
     	$rootScope.$broadcast("eventClientTypeChanged");
     };
 }).service('modalConfirmationService',function($uibModal){
