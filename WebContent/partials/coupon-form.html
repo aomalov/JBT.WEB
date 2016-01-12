@@ -69,10 +69,10 @@
     <div class="col-sm-10">
     	<span class="file-input btn btn-info btn-file">
     		Browse coupon logo image <i class="fa fa-picture-o fa-1x"></i>
-    		<input type="file">
+    		<input type="file" file-upload>
 		</span>
-		<button class="btn btn-warning btn-sm" ng-click="btn_doUpload()">Upload</button>
-        <button class="btn btn-warning btn-sm" ng-click="btn_uploadRemove()">Remove</button>
+		<span ng-class="['btn btn-warning btn-sm', files.length ? '' : 'disabled']" ng-click="btn_doUpload()">Upload</span>
+        <span ng-class="['btn btn-warning btn-sm', files.length ? '' : 'disabled']" ng-click="btn_uploadRemove()">Remove</span>
     </div>
 </div>
 

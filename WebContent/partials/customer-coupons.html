@@ -1,0 +1,17 @@
+
+<table class="table">
+	<tr>
+		<td></td>
+	    <td><a ui-sref="purchaseCoupon" class="btn-primary btn-lg">But another Coupon</a></td>
+	</tr>
+    <tr>
+        <td><h3>All Coupons</h3></td>
+        <td></td>
+    </tr> 
+    <tr ng-repeat="coupon in coupons">
+        <td>{{coupon.title}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewCustomerCoupon({id:coupon.id})">View</a>
+        </td>
+    </tr>
+</table>

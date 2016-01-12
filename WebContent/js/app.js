@@ -53,9 +53,24 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         url:'/company/coupons/:id/edit',
         templateUrl:'coupon.web/partials/coupon-edit.html',
         controller:'CouponEditController'
-    });
+    })
     
-   //TODO CUSTOMER-COUPONS 
+   //CUSTOMER-COUPONS 
+    .state('customer-coupons',{
+        url:'/customer/coupons',
+        templateUrl:'coupon.web/partials/customer-coupons.html',
+        controller:'CustomerCouponListController'
+    }).state('viewCustomerCoupon',{
+       url:'/customer/coupons/:id/view',
+       templateUrl:'coupon.web/partials/customer-coupon-view.html',
+       controller:'CustomerCouponViewController'
+    }).state('purchaseCoupon',{
+        url:'/customer/coupons/purchase',
+        templateUrl:'coupon.web/partials/coupon-purchase.html',
+        controller:'PurchaseCouponController'
+    });
+   
+    
 }).run(function($state){
    $state.go('guest');
 });

@@ -1,0 +1,16 @@
+<table class="table">
+    <tr>
+        <td><h3>All available Coupons</h3></td>
+        <td></td>
+    </tr> 
+    
+    <uib-pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage"></uib-pagination>
+    
+    <tr ng-repeat="coupon in getCoupons()">
+        <td>{{coupon.title}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewCustomerCoupon({id:coupon.id})">View</a>
+            <a class="btn btn-danger"  ng-click="purchaseCoupon(coupon)">Purchase</a>
+        </td>
+    </tr>
+</table>

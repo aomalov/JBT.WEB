@@ -47,6 +47,17 @@
 	                </li>
                 </ul>
                 
+                <ul class="nav navbar-nav" ng-show="clientType=='Client'">
+					<li class="dropdown" uib-dropdown>
+	                  <a href="#" uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Customer <span class="caret"></span></a>
+	                  <ul class="dropdown-menu">
+	                    <li><a ui-sref="customer-coupons">List My Coupons</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a ui-sref="purchaseCoupon">Purchase Coupon</a></li>
+	                  </ul>
+	                </li>
+                </ul>
+                
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show="clientType=='Guest'"><a ui-sref="login">Sign in  <i class="fa fa-user fa-1x"></i></a></li>
                     <li ng-show="clientType!='Guest'"><a href="/coupon.web/rest/logout">Sign out  <i class="fa fa-sign-out fa-1x"></i></a></li>

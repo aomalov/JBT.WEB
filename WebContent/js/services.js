@@ -2,18 +2,27 @@
  * Inspired by Sandeep on 01/06/14.
  */
 
-angular.module('testRest.services',[]).factory('Customer',function($resource){
+angular.module('testRest.services',[])
+// FACTORIES - REST RESOURCES
+.factory('Customer',function($resource){
     return $resource('coupon.web/rest/customers/:id',{id:'@id'},{
         update: {
             method: 'PUT' , params:{id:''}
         }
     });
+}).factory('CustomerCoupon',function($resource){
+    return $resource('coupon.web/rest/customer/coupons/:id',{id:'@id'}, {
+        purchase:  { method: 'PUT' , params:{id:''} },
+        showavail: { method: 'GET',  params:{id:'',owned:'no'} , isArray:true}
+        }
+    );
 }).factory('CompanyCoupon',function($resource){
     return $resource('coupon.web/rest/company/coupons/:id',{id:'@id'},{
         update: {
             method: 'PUT' , params:{id:''}
         }
     });
+// SERVICES
 }).service('restResponseService', function() {
 	   
     this.messageText = "";
@@ -38,17 +47,33 @@ angular.module('testRest.services',[]).factory('Customer',function($resource){
     };
 }).service('modalConfirmationService',function($uibModal){
 	
-	this.showDialog = function (toDeleteHeader) {
+	this.showDialog = function (modalQuestion) {
 		return $uibModal.open({
 		      animation: true,
 		      templateUrl: 'coupon.web/partials/modal-confirmation.html',
 		      controller: 'ModalInstanceCtrl',
 		      size: 'sm',
 		      resolve: {
-		        toDelete: function () {
-		            return toDeleteHeader;
+		        theQuestion: function () {
+		            return modalQuestion;
 		        }
 		      }
 		    });
 	}
+})
+// DIRECTIVES
+.directive('fileUpload', function () {
+ return {
+    scope: true,        //create a new scope
+    link: function (scope, el, attrs) {
+        el.bind('change', function (event) {
+            var files = event.target.files;
+            //iterate files since 'multiple' may be specified on the element
+            for (var i = 0;i<files.length;i++) {
+                //emit event upward
+                scope.$emit("fileSelected", { file: files[i] });
+            }                                       
+        });
+    }
+ };
 });

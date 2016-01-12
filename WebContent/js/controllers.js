@@ -48,7 +48,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       });
 
       $scope.deleteCustomer=function(customer){
-    	var modalInstance = modalConfirmationService.showDialog(customer.cust_NAME);
+    	var modalInstance = modalConfirmationService.showDialog("Do you really want to delete "+customer.cust_NAME);
     		
     	modalInstance.result.then(function () {
     		  console.log("to deletion");
@@ -151,9 +151,10 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       $scope.coupon=CompanyCoupon.get({id:$stateParams.id});
   };
   
-  $scope.btn_uploadRemove = function(file) {
-      $log.info('deleting=' + file);
-      uiUploader.removeFile(file);
+  $scope.btn_uploadRemove = function() {
+      $log.info('deleting files');
+      uiUploader.removeAll();
+      $scope.files=[];
   };
 
   $scope.btn_doUpload = function() {
@@ -170,12 +171,68 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
           }
       });
   };
+  
+  $scope.files = [];
+  $scope.$on("fileSelected", function (event, args) {
+	    $scope.$apply(function () {            
+	        //add the file object to the scope's files collection
+	        $scope.files.push(args.file);
+	        uiUploader.addFiles($scope.files);
+	    });
+  });
 
   $scope.loadCoupon();
   
-}).controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, toDelete) {
+})
 
-	  $scope.toDelete = toDelete;
+// CUSTOMER-COUPONS ================================================================
+.controller('CustomerCouponListController',function($scope,$state,CustomerCoupon, restResponseService, modalConfirmationService){
+
+	CustomerCoupon.query(function(result) {
+		  $scope.coupons=result;
+    }, function(response) {
+  	  console.log(response.data);
+  	  restResponseService.applyAlert(response.data,$scope);
+    });
+
+}).controller('CustomerCouponViewController',function($scope,$stateParams,CustomerCoupon){
+
+  $scope.coupon=CustomerCoupon.get({id:$stateParams.id});
+
+}).controller('PurchaseCouponController',function($scope,$state,$stateParams,CustomerCoupon,restResponseService,modalConfirmationService){
+
+  CustomerCoupon.showavail(function(result) {
+	      $scope.coupons=result;
+	      $scope.totalItems = $scope.coupons.length;
+          $scope.itemsPerPage = 3;
+          $scope.currentPage = 1;
+  }, function(response) {
+	  console.log(response.data);
+	  restResponseService.applyAlert(response.data,$scope);
+  });
+  
+  $scope.getCoupons = function() {
+  	if($scope.totalItems>0)
+        return $scope.coupons.slice(($scope.currentPage-1)*$scope.itemsPerPage,$scope.currentPage*$scope.itemsPerPage);
+  };
+  
+  $scope.purchaseCoupon=function(coupon){
+	  	var modalInstance = modalConfirmationService.showDialog("Do you really want to purchase "+coupon.title);
+	  		
+	  	modalInstance.result.then(function () {
+	  		  console.log("to purchase");
+	  	      coupon.$purchase(function(){
+	            	//refresh the coupons list
+	            	$scope.coupons=CustomerCoupon.query();
+	            });
+	  	    });	
+  }
+
+})
+// GENERAL PURPOSE controllers
+.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, theQuestion) {
+
+	  $scope.theQuestion = theQuestion;
 	
 	  $scope.ok = function () {
 	    $uibModalInstance.close("ok");
