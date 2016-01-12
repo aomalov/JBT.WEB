@@ -35,7 +35,8 @@ public class ClientCouponRestResource {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Coupon> getCoupons(@Context HttpServletRequest httpServletRequest,
-										 @DefaultValue("yes") @QueryParam("owned") String showOwned) throws CouponSystemException {
+										 @DefaultValue("yes") @QueryParam("owned") String showOwned,
+										 @DefaultValue("") @QueryParam("pattern") String searchPattern) throws CouponSystemException {
 		CustomerFacade customer;
 		
 		try {
@@ -45,7 +46,7 @@ public class ClientCouponRestResource {
 			throw new CouponSystemException("You must log in as a Customer for this operation");
 		}
 		if(showOwned.equals("no"))
-			return customer.getCouponsOnSale();
+			return customer.getCouponsOnSale(searchPattern);
 		else 
 			return customer.getAllPurchased();
 	}

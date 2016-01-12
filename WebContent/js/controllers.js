@@ -199,7 +199,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 
   $scope.coupon=CustomerCoupon.get({id:$stateParams.id});
 
-}).controller('PurchaseCouponController',function($scope,$state,$stateParams,CustomerCoupon,restResponseService,modalConfirmationService){
+}).controller('PurchaseCouponController',function($scope,$http,$state,$stateParams,CustomerCoupon,restResponseService,modalConfirmationService){
 
   CustomerCoupon.showavail(function(result) {
 	      $scope.coupons=result;
@@ -210,6 +210,19 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	  console.log(response.data);
 	  restResponseService.applyAlert(response.data,$scope);
   });
+  
+  $scope.lookupCoupons = function(val) {
+	    return $http.get('coupon.web/rest/customer/coupons', {
+	      params: {
+	        owned: 'no',
+	        pattern: val
+	      }
+	    }).then(function(response){
+	      return response.data.map(function(item){
+	        return item;
+	      });
+	    });
+	  };
   
   $scope.getCoupons = function() {
   	if($scope.totalItems>0)
