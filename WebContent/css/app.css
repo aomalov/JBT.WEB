@@ -2,8 +2,11 @@ body
 {
 	padding-top: 70px;
 }
-
 .jumbotron
+{
+    font-family: "Lato"; 
+}
+.navbar .navbar-header
 {
     font-family: "Lato"; 
 }

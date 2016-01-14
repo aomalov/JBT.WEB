@@ -224,6 +224,12 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	    });
 	  };
   
+  $scope.quickBuyCoupon = function(couponId) {
+	  CustomerCoupon.get({id:couponId},function(result) {
+		  $scope.purchaseCoupon(result);
+	  });
+  }	  
+	  
   $scope.getCoupons = function() {
   	if($scope.totalItems>0)
         return $scope.coupons.slice(($scope.currentPage-1)*$scope.itemsPerPage,$scope.currentPage*$scope.itemsPerPage);
@@ -234,10 +240,14 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	  		
 	  	modalInstance.result.then(function () {
 	  		  console.log("to purchase");
-	  	      coupon.$purchase(function(){
+	  	      coupon.$purchase(function(result){
 	            	//refresh the coupons list
-	            	$scope.coupons=CustomerCoupon.query();
-	            });
+	  	    	restResponseService.applyAlert({messageText:'Coupon purchased',messageType:'success'},$scope);
+	  	    	  $state.go('customer-coupons');
+	            }, function(response) {
+	          	  console.log(response.data);
+	        	  restResponseService.applyAlert(response.data,$scope);
+	          });
 	  	    });	
   }
 
