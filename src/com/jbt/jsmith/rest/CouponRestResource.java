@@ -1,10 +1,18 @@
 package com.jbt.jsmith.rest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,7 +24,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -106,34 +116,33 @@ public class CouponRestResource {
 		company.updateCoupon(newCoupon);
 	}
 
-	@POST
-	@Path("/{id}/imgupload")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public void uploadCouponImage(MultipartFormDataInput input,
-								  @PathParam("id") long ID,
-								  @Context HttpServletRequest httpServletRequest) throws CouponSystemException{
-		CompanyFacade company;
-		
-		try {
-			company = (CompanyFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
-		}
-		catch (Exception e) {
-			throw new CouponSystemException("You must log in as an Company for this operation");
-		}
+//	@POST
+//	@Path("/{id}/imgupload")
+//	@Consumes(MediaType.MULTIPART_FORM_DATA)
+//	public void uploadCouponImage(@PathParam("id") long ID,
+//								  @Context HttpServletRequest httpServletRequest) throws CouponSystemException{
+//		CompanyFacade company;
+//		
+//		try {
+//			company = (CompanyFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+//		}
+//		catch (Exception e) {
+//			throw new CouponSystemException("You must log in as an Company for this operation");
+//		}
 //		Coupon aCoupon=company.getCoupon(ID);
 //		aCoupon.setIMAGE(input.);
 		
 //		company.updateCoupon(aCoupon);
 		
-		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-		List<InputPart> inputParts = uploadForm.get("uploadedFile");
-
-		for (InputPart inputPart : inputParts) {
-
-		 try {
-
-			MultivaluedMap<String, String> header = inputPart.getHeaders();
-			String fileName = getFileName(header);
+//		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+//		List<InputPart> inputParts = uploadForm.get("uploadedFile");
+//
+//		for (InputPart inputPart : inputParts) {
+//
+//		 try {
+//
+//			MultivaluedMap<String, String> header = inputPart.getHeaders();
+//			String fileName = getFileName(header);
 
 //			//convert the uploaded file to inputstream
 //			InputStream inputStream = (InputStream) inputPart.getBody(InputStream.class,null);
@@ -147,28 +156,76 @@ public class CouponRestResource {
 //				
 //			System.out.println("Done");
 
-		  } catch (Exception e) {
-			e.printStackTrace();
-		  }
-
-		}
-
-	}
+//		  } catch (Exception e) {
+//			e.printStackTrace();
+//		  }
+//
+//		}
+//	}
 	
-	private String getFileName(MultivaluedMap<String, String> header) {
-
-		String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
+	
+	@POST
+    @Path("/upload-image")
+    @Consumes("multipart/form-data")
+    public void uploadFile(@MultipartForm FileUploadForm form,
+    					   @Context HttpServletRequest httpServletRequest,
+    					   @Context HttpServletResponse httpServletResponse ) throws IOException, CouponSystemException {
+  
+		CompanyFacade company;
 		
-		for (String filename : contentDisposition) {
-			if ((filename.trim().startsWith("filename"))) {
-
-				String[] name = filename.split("=");
-				
-				String finalFileName = name[1].trim().replaceAll("\"", "");
-				return finalFileName;
-			}
+		try {
+			company = (CompanyFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
 		}
-		return "unknown";
-	}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Company for this operation");
+		}
+		
+        String fileName = Long.toString (ThreadLocalRandom.current().nextLong (), 36) + "_" + (form.getFileName() == null ? "Unknown" : form.getFileName() );
+        String messageType="success",messageText="Image uploaded";
+        String redirectUrl = httpServletRequest.getContextPath()+ "/index.html#/company/coupons";
+         
+        String completeFilePath = "C:/Users/andrewm/My Apps/wildfly-9.0.2.Final/standalone/deployments/coupon.web.war/img/" +  fileName;
+        try
+        {
+            //Save the file
+            File file = new File(completeFilePath);
+              
+            if (!file.exists())
+            {
+                file.createNewFile();
+            }
+      
+            FileOutputStream fos = new FileOutputStream(file);
+      
+            fos.write(form.getFileData());
+            fos.flush();
+            fos.close();
+            
+            //update Coupon image property
+    		Coupon aCoupon=company.getCoupon(Long.parseLong(form.getCouponId()));
+    		aCoupon.setIMAGE(fileName);
+    		company.updateCoupon(aCoupon);
+        }
+        catch (IOException e)
+        {
+            messageType="danger";
+            messageText="Error image upload";
+        }
+        //Build a response to return
+        httpServletResponse.sendRedirect(redirectUrl);
+//	    httpServletResponse.setContentType("text/json; charset=UTF-8");
+//	    httpServletResponse.setStatus(200);
+//
+//	    PrintWriter out = httpServletResponse.getWriter();
+//		out.println("{"+
+//				"\"messageText\":"+"\""+messageText+"\","+  
+//				"\"messageType\":"+"\""+messageType+"\","+
+//				"\"redirectUrl\":"+"\""+redirectUrl+"\""+
+//		   "}");
+//
+//	    out.flush();
+//	    out.close();        
+    }
+	
 	
 }

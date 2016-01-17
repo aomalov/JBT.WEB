@@ -1,3 +1,17 @@
 <form name="couponForm" class="form-horizontal" role="form" ng-submit="updateCoupon()">
     <div ng-include="'coupon.web/partials/coupon-form.html'"></div>
 </form>
+
+<form class="form-horizontal" role="form" action="coupon.web/rest/company/coupons/upload-image" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <div class="input-group">
+        <label for="uploadImage">Choose picture</label><P>
+        <span class="btn btn-default btn-file" id="uploadImage" >
+	      Browse<input type="file" name="selectedFile" file-upload >
+	    </span>
+	    <input type="hidden" name="coupon_id" value="{{coupon.id}}">
+	    <input type="hidden" name="fileName" value="{{files[0].name}}">
+	    <input ng-class="['btn btn-warning', files.length ? '' : 'disabled']" type="submit" value="Upload" />
+    </div>
+  </div>
+</form>

@@ -151,33 +151,36 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       $scope.coupon=CompanyCoupon.get({id:$stateParams.id});
   };
   
-  $scope.btn_uploadRemove = function() {
-      $log.info('deleting files');
-      uiUploader.removeAll();
-      $scope.files=[];
-  };
-
-  $scope.btn_doUpload = function() {
-      $log.info('uploading...');
-      uiUploader.startUpload({
-          url: 'coupon.web/rest/company/coupons/'+$scope.coupon.id+'/imgupload',
+//  $scope.btn_uploadRemove = function() {
+//      $log.info('deleting files');
+//      uiUploader.removeAll();
+//      $scope.files=[];
+//  };
+//
+//  $scope.btn_doUpload = function() {
+//      $log.info('uploading...');
+//      uiUploader.startUpload({
+//          url: 'coupon.web/rest/company/coupons/'+$scope.coupon.id+'/imgupload',
+//          headers: {
+//              'Accept': 'application/json'
+//          },
 //          concurrency: 2,
 //          onProgress: function(file) {
 //              $log.info(file.name + '=' + file.humanSize);
 //              $scope.$apply();
 //          },
-          onCompleted: function(file, response) {
-              $log.info(file + 'response' + response);
-          }
-      });
-  };
-  
+//          onCompleted: function(file, response) {
+//              $log.info(file + 'response' + response);
+//          }
+//      });
+//  };
+//  
   $scope.files = [];
   $scope.$on("fileSelected", function (event, args) {
 	    $scope.$apply(function () {            
 	        //add the file object to the scope's files collection
 	        $scope.files.push(args.file);
-	        uiUploader.addFiles($scope.files);
+//	        uiUploader.addFiles($scope.files);
 	    });
   });
 

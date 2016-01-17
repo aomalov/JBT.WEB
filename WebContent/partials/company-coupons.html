@@ -1,18 +1,20 @@
 
-<table class="table">
-	<tr>
-		<td></td>
-	    <td><a ui-sref="newCoupon" class="btn-primary btn-lg">Add New Coupon</a></td>
-	</tr>
-    <tr>
-        <td><h3>All Coupons</h3></td>
-        <td></td>
-    </tr> 
-    <tr ng-repeat="coupon in coupons">
-        <td>{{coupon.title}}</td>
-        <td>
-            <a class="btn btn-primary" ui-sref="viewCompanyCoupon({id:coupon.id})">View</a>
-            <a class="btn btn-danger"  ng-click="deleteCoupon(coupon)">Delete</a>
-        </td>
-    </tr>
-</table>
+<div class="row" align="right">
+  <a ui-sref="newCoupon" class="btn-primary btn-lg">Add New Coupon</a>
+</div>
+<div class="row" align="center">
+  <h3>All Coupons</h3>
+</div>
+<div ng-repeat="coupon in coupons" class="row">
+  <div class="col-lg-4 col-md-4 col-sm-4">{{coupon.title}}</div>
+  <div class="col-lg-2 col-md-2 col-sm-2">
+    <div class="thumbnail">
+      <img src="coupon.web/img/{{coupon.image}}">
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6">
+      <a class="btn btn-primary" ui-sref="viewCompanyCoupon({id:coupon.id})">View</a>
+      <a class="btn btn-danger"  ng-click="deleteCoupon(coupon)">Delete</a>
+  </div>
+</div> 
+    
