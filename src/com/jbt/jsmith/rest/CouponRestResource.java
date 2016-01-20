@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -169,6 +170,7 @@ public class CouponRestResource {
     @Consumes("multipart/form-data")
     public void uploadFile(@MultipartForm FileUploadForm form,
     					   @Context HttpServletRequest httpServletRequest,
+    					   @Context ServletContext servletContext, 
     					   @Context HttpServletResponse httpServletResponse ) throws IOException, CouponSystemException {
   
 		CompanyFacade company;
@@ -184,7 +186,7 @@ public class CouponRestResource {
         String messageType="success",messageText="Image uploaded";
         String redirectUrl = httpServletRequest.getContextPath()+ "/index.html#/company/coupons";
          
-        String completeFilePath = "C:/Users/andrewm/My Apps/wildfly-9.0.2.Final/standalone/deployments/coupon.web.war/img/" +  fileName;
+        String completeFilePath = servletContext.getInitParameter("imageFolder") +  fileName;
         try
         {
             //Save the file

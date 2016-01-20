@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+ <context-param>
+    <param-name>imageFolder</param-name>
+    <param-value>C:/Users/andrewm/My Apps/wildfly-9.0.2.Final/standalone/deployments/coupon.web.war/img/</param-value>
+</context-param>
+
+</web-app>  
