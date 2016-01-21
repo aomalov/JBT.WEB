@@ -39,6 +39,33 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
 
 ### Client side
 
+- Use [Bootstrap](http://getbootstrap.com) as the out-of-the-box ``CSS+JavaScript`` web interface foundation
+- Among the alternative frameworks worth mentioning:
+    - [Semantic UI](http://semantic-ui.com/)
+    - [AUI](https://docs.atlassian.com/aui/5.2/index.html)
+- **VOID use of ~~JQuery~~** - use [AngularJS](http://angularjs.org)
+    - Native Bootstrap javascript unit has been nicely adapted to pure Angular style - [here](http://angular-ui.github.io/bootstrap/#/getting_started)
+
+#### Tricks and References
+
+* Use Angular service to provide a singleton facility for client type and error message, injected to every controller (see **services.js**)
+* Use *$emit/$broadcast* to escalate error events from nested controllers
+* Use [UI-Router](https://github.com/angular-ui/ui-router) external module to create a state machine for a Single Page Application, extending generic angular *$router* service to handle ``hash urls`` (like *http://..../index.html#login*). See **app.js** 
+* Enforce client-side input form validation using external angular directive (see [Show-errors](https://github.com/paulyoder/angular-bootstrap-show-errors) extending the common bootstrap validation)
+* Integrate RESTful resource as a single ajax browser entity using *$resource* angular service (see **services.js**)
+* Introduce modern user experience with js and ajax :
+    * modal forms
+    * navigation bar
+    * pagination
+    * dropdown menu
+    * disappearing closable alert
+    * typeahead with async server lookup
+    * html rendering, adapted to a flexible browser width, allow for mobiles, for instance 
+> all comes for free with Bootstrap
+
+* Introduce modern user experiense with css
+    * Icons and glyphs for free: [Font Awesome](https://fortawesome.github.io/Font-Awesome/icons/)
+    * Nice fonts for free : [Google fonts](https://www.google.com/fonts#)
 
 
 ### Installation
@@ -51,15 +78,12 @@ download the sources from here
 prepare JAR file from [Phase 1 - Coupon DB] sources
 get derbyclient.jar
 copy those 2 jar files to /web-inf/lib
+set up "web.xml" file to point to local folder , where the "WebContent/img" folder is mapped to
 ```
-
-
-
 
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-   [dill]: <https://github.com/joemccann/dillinger>
    [Phase 1 - Coupon DB]: <https://github.com/aomalov/JBT>
    [Security]: <https://www.owasp.org/index.php/Hashing_Java>
 
