@@ -17,16 +17,20 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
 
 ## Second Phase
 
-> Create a nice and neat WEB presentation layer for 3 different facades , introduced earlier.
+> Create a nice and neat WEB presentation layer for 3 different facades , introduced earlier. Use `SPA` - single page application modern paradigm 
 
+### Server-side 
 
+- Use [WildFly](http://wildfly.org/downloads/) most recent `JBOSS` server as a web container
+- Use [RestEASY](http://resteasy.jboss.org/) as the `REST`ful services router servlet
+- Use `@WebFilter` annotation to filter out unauthorised requests to rest resources and unappropriate requests within the restricted site area
+    - Save *facade* to user `Session` and check each request if it is in place
+- Check *facade* type for the appropriate service - within the corresponding restful resource class
+- Use `@Provider` annotation to catch all Exceptions  and turn turn them into a shaped response at the client side
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
 
 ### Installation
 
-You need Gulp installed globally:
 
 
 ```sh
