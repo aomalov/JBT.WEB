@@ -23,10 +23,22 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
 
 - Use [WildFly](http://wildfly.org/downloads/) most recent `JBOSS` server as a web container
 - Use [RestEASY](http://resteasy.jboss.org/) as the `REST`ful services router servlet
+    - benefit from automatic DTO <-> JSON data mapping
+    - benefit from automatic Collection -> JSON array data mapping
 - Use `@WebFilter` annotation to filter out unauthorised requests to rest resources and unappropriate requests within the restricted site area
     - Save *facade* to user `Session` and check each request if it is in place
 - Check *facade* type for the appropriate service - within the corresponding restful resource class
-- Use `@Provider` annotation to catch all Exceptions  and turn turn them into a shaped response at the client side
+- Use `@Provider` annotation to catch all Exceptions  and turn them into a shaped response at the client side
+- Use `web.xml` **ONLY** for */img* folder definition - define local path to store uploaded coupon images on the server
+    - use `@MultipartForm` annotation to host upload image content into a POJO (see [this](http://examples.javacodegeeks.com/enterprise-java/rest/resteasy/resteasy-file-upload-example/) for details)
+
+#### Tricks and references
+
+- Send `datetime` data from web-browser and back: changed Coupon DTO generic setter parameter to String and used **SimpleDateFormat** to deserialize it back to Date
+- Get context params configured in web.xml- see [this](http://tutorials.jenkov.com/java-servlets/web-xml.html#contextParams)
+
+### Client side
+
 
 
 ### Installation
@@ -34,12 +46,11 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
 
 
 ```sh
-$ git clone [git-repo-url] dillinger
-$ cd dillinger
-$ npm i -d
-$ mkdir -p downloads/files/{md,html,pdf}
-$ gulp build --prod
-$ NODE_ENV=production node app
+give the name "coupon.web" to a new dynamic web project
+download the sources from here
+prepare JAR file from [Phase 1 - Coupon DB] sources
+get derbyclient.jar
+copy those 2 jar files to /web-inf/lib
 ```
 
 
