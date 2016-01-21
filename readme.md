@@ -61,7 +61,9 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
     * disappearing closable alert
     * typeahead with async server lookup
     * html rendering, adapted to a flexible browser width, allow for mobiles, for instance 
+
 > all comes for free with Bootstrap
+>
 
 * Introduce modern user experiense with css
     * Icons and glyphs for free: [Font Awesome](https://fortawesome.github.io/Font-Awesome/icons/)
