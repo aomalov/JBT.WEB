@@ -69,6 +69,7 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
     * Icons and glyphs for free: [Font Awesome](https://fortawesome.github.io/Font-Awesome/icons/)
     * Nice fonts for free : [Google fonts](https://www.google.com/fonts#)
 
+* Client side inspired by Anthony Alicea and Colt Steele, mentors @ [Udemy](http://udemy.com/). It took me less than a week to get in control with Angular and Bootstrap.
 
 ### Installation
 
