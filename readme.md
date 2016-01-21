@@ -42,7 +42,7 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
 - Use [Bootstrap](http://getbootstrap.com) as the out-of-the-box ``CSS+JavaScript`` web interface foundation
 - Among the alternative frameworks worth mentioning:
     - [Semantic UI](http://semantic-ui.com/)
-    - [AUI](https://docs.atlassian.com/aui/5.2/index.html)
+    - [Atlassian UI](https://docs.atlassian.com/aui/5.2/index.html)
 - **VOID use of ~~JQuery~~** - use [AngularJS](http://angularjs.org)
     - Native Bootstrap javascript unit has been nicely adapted to pure Angular style - [here](http://angular-ui.github.io/bootstrap/#/getting_started)
 
