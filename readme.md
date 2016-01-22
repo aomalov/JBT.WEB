@@ -51,8 +51,8 @@ Web interface for the JBT project. Uses jar library interfacing the database sto
 * Use Angular service to provide a singleton facility for client type and error message, injected to every controller (see **services.js**)
 * Use *$emit/$broadcast* to escalate error events from nested controllers
 * Use [UI-Router](https://github.com/angular-ui/ui-router) external module to create a state machine for a Single Page Application, extending generic angular *$router* service to handle ``hash urls`` (like *http://..../index.html#login*). See **app.js** 
-* Enforce client-side input form validation using external angular directive (see [Show-errors](https://github.com/paulyoder/angular-bootstrap-show-errors) extending the common bootstrap validation)
-* Integrate RESTful resource as a single ajax browser entity using *$resource* angular service (see **services.js**)
+* Enforce client-side input form validation using external angular directive (see [Show-errors](https://github.com/paulyoder/angular-bootstrap-show-errors) extending the common bootstrap validation, inspired by [Paul Yoder](http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/?utm_source=github&utm_medium=readme&utm_campaign=code))
+* Integrate RESTful resource as a single ajax browser entity using *$resource* angular service (see **services.js** inspired by [Sandeep Panda](http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/))
 * Introduce modern user experience with js and ajax :
     * modal forms
     * navigation bar
