@@ -1,0 +1,18 @@
+
+<table class="table">
+	<tr>
+		<td></td>
+	    <td><a ui-sref="newCompany" class="btn-primary btn-lg">Add New Company</a></td>
+	</tr>
+    <tr>
+        <td><h3>All Companies</h3></td>
+        <td></td>
+    </tr> 
+    <tr ng-repeat="company in companies">
+        <td>{{company.comp_NAME}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewCompany({id:company.id})">View</a>
+            <a class="btn btn-danger"  ng-click="deleteCompany(company)">Delete</a>
+        </td>
+    </tr>
+</table>

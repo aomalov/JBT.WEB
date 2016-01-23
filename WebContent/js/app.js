@@ -33,7 +33,25 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         templateUrl:'coupon.web/partials/customer-edit.html',
         controller:'CustomerEditController'
     })
-    //TODO  ADMIN-COMPANIES
+
+    //ADMIN-COMPANIES
+    .state('companies',{
+        url:'/companies',
+        templateUrl:'coupon.web/partials/companies.html',
+        controller:'CompanyListController'
+    }).state('viewCompany',{
+       url:'/companies/:id/view',
+       templateUrl:'coupon.web/partials/company-view.html',
+       controller:'CompanyViewController'
+    }).state('newCompany',{
+        url:'/companies/new',
+        templateUrl:'coupon.web/partials/company-add.html',
+        controller:'CompanyCreateController'
+    }).state('editCompany',{
+        url:'/companies/:id/edit',
+        templateUrl:'coupon.web/partials/company-edit.html',
+        controller:'CompanyEditController'
+    })
     
     
     //COMPANY-COUPONS

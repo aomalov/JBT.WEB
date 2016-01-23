@@ -22,7 +22,7 @@ import sun.security.krb5.SCDynamicStoreConfig;
 /**
  * Servlet Filter implementation class SessionFilter
  */
-@WebFilter(filterName="sessionFilter" , urlPatterns = {"/rest/customers/*","/rest/company/*","/rest/customer/*"} )
+@WebFilter(filterName="sessionFilter" , urlPatterns = {"/rest/customers/*","/rest/companies/*","/rest/company/*","/rest/customer/*"} )
 public class SessionFilter implements Filter {
 
 

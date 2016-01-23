@@ -10,6 +10,12 @@ angular.module('testRest.services',[])
             method: 'PUT' , params:{id:''}
         }
     });
+}).factory('Company',function($resource){
+    return $resource('coupon.web/rest/companies/:id',{id:'@id'},{
+        update: {
+            method: 'PUT' , params:{id:''}
+        }
+    });
 }).factory('CustomerCoupon',function($resource){
     return $resource('coupon.web/rest/customer/coupons/:id',{id:'@id'}, {
         purchase:  { method: 'PUT' , params:{id:''} },

@@ -1,0 +1,31 @@
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="title" class="col-sm-2 control-label">Company Name</label>
+    <div class="col-sm-10">
+        <input type="text" name="cust_NAME" ng-model="company.comp_NAME" class="form-control" id="title" placeholder="Company Name" required/>
+        <span ng-class="['glyphicon', companyForm.comp_NAME.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="companyForm.comp_NAME.$error.required">The company's name is required</p>
+    </div>
+</div>
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="email" class="col-sm-2 control-label">Company Email</label>
+    <div class="col-sm-10">
+        <input type="text" name="email" ng-model="company.email" class="form-control" id="email" placeholder="Company Email" required/>
+        <span ng-class="['glyphicon', companyForm.email.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="companyForm.email.$error.required">The company's email is required</p>
+    </div>
+</div>
+<div class="form-group has-feedback" show-errors="{ showSuccess: true }">
+    <label for="password" class="col-sm-2 control-label">Password</label> 
+    <div class="col-sm-10">
+        <input type="password" name="password" ng-model="company.password" class="form-control" id="password" placeholder="Password" required ng-minlength="6"/>
+        <span ng-class="['glyphicon', companyForm.password.$valid ? 'glyphicon-ok' : 'glyphicon-remove' ,'form-control-feedback']" aria-hidden="true"></span>
+        <p class="help-block" ng-if="companyForm.password.$error.required">The company's password is required</p>
+        <p class="help-block" ng-if="companyForm.password.$error.minlength">The company's password should be at least 6 characters long</p>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" ng-class="['btn btn-primary', companyForm.$valid ? '' : 'disabled']" value="Save"/>
+    </div>
+</div>

@@ -94,6 +94,64 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
     $scope.loadCustomer();
     
 })
+//ADMIN - COMPANIES
+.controller('CompanyListController',function($scope,$state,Company, restResponseService, modalConfirmationService){
+
+	  Company.query(function(result) {
+		  $scope.companies=result;
+      }, function(response) {
+    	  console.log(response.data);
+    	  restResponseService.applyAlert(response.data,$scope);
+      });
+
+      $scope.deleteCompany=function(company){
+    	var modalInstance = modalConfirmationService.showDialog("Do you really want to delete "+company.comp_NAME);
+    		
+    	modalInstance.result.then(function () {
+    		  console.log("to deletion");
+    	      company.$delete(function(){
+              	//refresh the company list
+              	$scope.companies=Company.query();
+              });
+    	    });	
+    }
+
+}).controller('CompanyViewController',function($scope,$stateParams,Company){
+
+    $scope.company=Company.get({id:$stateParams.id});
+
+}).controller('CompanyCreateController',function($scope,$state,$stateParams,Company,restResponseService){
+
+    $scope.company=new Company();
+
+    $scope.addCompany=function(){
+        $scope.company.$save(function(){
+            $state.go('companies');
+        },function(response){
+        	console.log(response.data);
+        	restResponseService.applyAlert(response.data,$scope);
+        });
+    }
+
+}).controller('CompanyEditController',function($scope,$state,$stateParams,Company,restResponseService){
+
+    $scope.updateCompany=function(){
+        $scope.company.$update(function(){
+            $state.go('companies');
+        },function(response){
+        	console.log(response.data);
+        	restResponseService.applyAlert(response.data,$scope);
+        });
+    };
+
+    $scope.loadCompany=function(){
+        $scope.company=Company.get({id:$stateParams.id});
+    };
+
+    $scope.loadCompany();
+    
+})
+
 
 // COMPANY-COUPONS ================================================================
 .controller('CompanyCouponListController',function($scope,$state,CompanyCoupon, restResponseService, modalConfirmationService){
