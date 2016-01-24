@@ -9,11 +9,14 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 import com.jbt.jsmith.CouponSystem;
 import com.jbt.jsmith.CouponSystem.ClientType;
@@ -29,18 +32,31 @@ public class LoginRestResourse {
 
 	@POST 
 	@Path("login")
-	public void doLogin(@FormParam("userName") String userName,
-						@FormParam("password") String password,
-						@FormParam("clientType") String clientType,
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void doLogin(UserWrapper user,
 						@Context HttpServletRequest httpServletRequest,
 						@Context HttpServletResponse httpServletResponse) throws CouponSystemException, IOException {
 		
 		CouponSystem theCouponius=CouponSystem.getInstance();
 		
-		CouponClientFacade aFacade = theCouponius.login(userName, password, ClientType.valueOf(clientType));
+		CouponClientFacade aFacade = theCouponius.login(user.getUserName(), user.getPassword(), ClientType.valueOf(user.getClientType()));
 		httpServletRequest.getSession(true).setAttribute("userFacade", aFacade);
+		
+		String redirectUrl = httpServletRequest.getContextPath()+ "/index.html#/welcome?clientType="+user.getClientType();
+		httpServletResponse.setContentType("text/json; charset=UTF-8");
+		httpServletResponse.setStatus(200);
+
+	    PrintWriter out = httpServletResponse.getWriter();
+
+		out.println("{"+
+				"\"redirectUrl\":"+"\""+redirectUrl+"\""+
+		   "}");
+
+	    out.flush();
+	    out.close();
 	    
-		httpServletResponse.sendRedirect("/coupon.web/index.html#/welcome?clientType="+clientType);
+//		httpServletResponse.sendRedirect("/coupon.web/index.html#/welcome?clientType="+user.getClientType());
 	}
 	
 	

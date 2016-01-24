@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  *Error class utility - translation to JSON to web client
  */
-@XmlRootElement(name="CouponRestErrorMessage")
+//@XmlRootElement(name="CouponRestErrorMessage")
 public class CouponRestErrorMessage {
 	
 	String messageText;
@@ -23,7 +23,7 @@ public class CouponRestErrorMessage {
 		this.messageType = messageType;
 	}
 
-	@XmlElement
+//	@XmlElement
 	public String getMessageText() {
 		return messageText;
 	}
@@ -35,7 +35,7 @@ public class CouponRestErrorMessage {
 	/**
 	 * @return the messageType
 	 */
-	@XmlElement
+//	@XmlElement
 	public String getMessageType() {
 		return messageType;
 	}

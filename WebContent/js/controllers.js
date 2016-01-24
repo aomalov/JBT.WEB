@@ -1,7 +1,8 @@
 /**
  * Inspired by Sandeep on 01/06/14.
  */
-angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams,clientAuthTypeService){
+angular.module('testRest.controllers',[]).controller('LoginController',function($scope,$stateParams,$http,clientAuthTypeService,restResponseService){
+	
   console.log("logon screen");
   if($stateParams.clientType) {
 	  console.log($stateParams.clientType);
@@ -12,6 +13,18 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
 	  $scope.onlineUser="Guest";
 	  clientAuthTypeService.setClientType("Guest");
   }
+  
+  $scope.doLogin = function() {
+	  
+	  $http.post("coupon.web/rest/login",$scope.login)
+	    .then(function(result) {
+	    	window.location.replace(result.data.redirectUrl);
+	      }, function(response) {
+	    	  console.log(response.data);
+	    	  restResponseService.applyAlert(response.data,$scope);
+	      });
+  }
+  
 }).controller('NavbarMenuController',function($scope,$cookies,clientAuthTypeService){
 	
 	  console.log("setting up nav bar");

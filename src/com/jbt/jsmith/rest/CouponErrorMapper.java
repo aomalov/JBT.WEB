@@ -20,7 +20,8 @@ public class CouponErrorMapper  implements ExceptionMapper<CouponSystemException
     @Override
     public Response toResponse(CouponSystemException cause) {
     	GenericEntity<CouponRestErrorMessage> entity=new GenericEntity<CouponRestErrorMessage>(new CouponRestErrorMessage(cause.getMessage(),"danger")){};
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+    	Response resp=Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+        return resp;
     }
 
 }
