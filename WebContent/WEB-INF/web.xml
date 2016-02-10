@@ -8,7 +8,7 @@
 
  <context-param>
     <param-name>imageFolder</param-name>
-    <param-value>C:/Users/andrewm/My Apps/wildfly-9.0.2.Final/standalone/deployments/coupon.web.war/img/</param-value>
+    <param-value>C:/Users/andrewm/My Apps/wildfly-9.0.2.Final/standalone/deployments/coupon.web.ear/coupon.web.war/img/</param-value>
 </context-param>
 
 </web-app>  

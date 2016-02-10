@@ -53,6 +53,23 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         controller:'CompanyEditController'
     })
     
+    //ADMIN - REPORTS
+    .state('reportAllInvoices',{
+        url:'/admin/allInvoices',
+        templateUrl:'coupon.web/partials/invoices-report-simple.html',
+        controller:'InvoicesSimpleReportController',
+        data: {adminMode:"1"}
+    }).state('reportInvoicesByCustomer',{
+        url:'/admin/allInvoicesByCustomer',
+        templateUrl:'coupon.web/partials/report-by-customer.html',
+        controller:'InvoicesByPartyReportController',
+        data: {adminMode:"1", party: "customer"}
+    }).state('reportInvoicesByCompany',{
+        url:'/admin/allInvoicesByCompany',
+        templateUrl:'coupon.web/partials/report-by-company.html',
+        controller:'InvoicesByPartyReportController',
+        data: {adminMode:"1", party: "company"}
+    })
     
     //COMPANY-COUPONS
     .state('company-coupons',{
@@ -71,6 +88,10 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         url:'/company/coupons/:id/edit',
         templateUrl:'coupon.web/partials/coupon-edit.html',
         controller:'CouponEditController'
+    }).state('reportCompanyInvoices',{
+        url:'/company/coupons/companyInvoices',
+        templateUrl:'coupon.web/partials/invoices-report-simple.html',
+        controller:'InvoicesSimpleReportController'
     })
     
    //CUSTOMER-COUPONS 
@@ -86,6 +107,10 @@ angular.module('testRest').config(function($stateProvider,$httpProvider){
         url:'/customer/coupons/purchase',
         templateUrl:'coupon.web/partials/coupon-purchase.html',
         controller:'PurchaseCouponController'
+    }).state('reportCustomerInvoices',{
+        url:'/customer/coupons/customerInvoices',
+        templateUrl:'coupon.web/partials/invoices-report-simple.html',
+        controller:'InvoicesSimpleReportController'
     });
    
     

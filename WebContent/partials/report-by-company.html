@@ -1,0 +1,19 @@
+
+<div class="row" align="center">
+  <div class="col-lg-8 col-md-8 col-sm-8">
+	<form class="form-inline">
+	  <div class="form-group">
+	    <div class="input-group">
+	        <select class="form-control" name="company" ng-model="selectedId">
+	          <option ng-repeat="company in companies" value="{{company.id}}">{{company.comp_NAME}}</option>
+	        </select>  
+	        <div class="input-group-btn">
+		      <button type="button" ng-class="['btn btn-default btn-warning', selectedId ? '' : 'disabled']" ng-click="runReport()">Run report</button>
+		    </div>
+	    </div>
+	  </div>
+	</form>
+	<BR>
+  </div>
+</div>    
+<div ng-include="'coupon.web/partials/invoices-report-simple.html'"></div>

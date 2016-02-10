@@ -3,14 +3,11 @@ package com.jbt.jsmith.rest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,20 +21,23 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
+import com.jbt.ejb.beans.Income;
+import com.jbt.ejb.delegate.IncomeDelegate;
 import com.jbt.jsmith.CouponSystemException;
 import com.jbt.jsmith.dto.Coupon;
 import com.jbt.jsmith.facade.CompanyFacade;
 
+import com.jbt.ejb.beans.OperationType;
+
 
 @Path("/company/coupons")
 public class CouponRestResource {
+	
+	@EJB
+	IncomeDelegate delegateStub;
 
 	@GET
 	@Path("/")
@@ -98,6 +98,7 @@ public class CouponRestResource {
 		}
 		
 		company.createCoupon(newCoupon);
+		delegateStub.storeIncome(new Income(company.getId(), OperationType.COMPANY_CREATE.getInvoiceSum(newCoupon.getPRICE()) , new Date(System.currentTimeMillis()), OperationType.COMPANY_CREATE, company.getName()));
 	}
 	
 	@PUT
@@ -115,56 +116,9 @@ public class CouponRestResource {
 		}
 		
 		company.updateCoupon(newCoupon);
+		delegateStub.storeIncome(new Income(company.getId(), OperationType.COMPANY_UPDATE.getInvoiceSum(newCoupon.getPRICE()) , new Date(System.currentTimeMillis()), OperationType.COMPANY_UPDATE, company.getName()));
 	}
 
-//	@POST
-//	@Path("/{id}/imgupload")
-//	@Consumes(MediaType.MULTIPART_FORM_DATA)
-//	public void uploadCouponImage(@PathParam("id") long ID,
-//								  @Context HttpServletRequest httpServletRequest) throws CouponSystemException{
-//		CompanyFacade company;
-//		
-//		try {
-//			company = (CompanyFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
-//		}
-//		catch (Exception e) {
-//			throw new CouponSystemException("You must log in as an Company for this operation");
-//		}
-//		Coupon aCoupon=company.getCoupon(ID);
-//		aCoupon.setIMAGE(input.);
-		
-//		company.updateCoupon(aCoupon);
-		
-//		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-//		List<InputPart> inputParts = uploadForm.get("uploadedFile");
-//
-//		for (InputPart inputPart : inputParts) {
-//
-//		 try {
-//
-//			MultivaluedMap<String, String> header = inputPart.getHeaders();
-//			String fileName = getFileName(header);
-
-//			//convert the uploaded file to inputstream
-//			InputStream inputStream = (InputStream) inputPart.getBody(InputStream.class,null);
-//
-//			byte [] bytes = IOUtils.toByteArray(inputStream);
-//				
-//			//constructs upload file path
-//			fileName = UPLOADED_FILE_PATH + fileName;
-//				
-//			writeFile(bytes,fileName);
-//				
-//			System.out.println("Done");
-
-//		  } catch (Exception e) {
-//			e.printStackTrace();
-//		  }
-//
-//		}
-//	}
-	
-	
 	@POST
     @Path("/upload-image")
     @Consumes("multipart/form-data")
@@ -228,6 +182,22 @@ public class CouponRestResource {
 //	    out.flush();
 //	    out.close();        
     }
+	
+	@GET
+	@Path("/companyInvoices")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Income[] getInvoicesByCompany(@Context HttpServletRequest httpServletRequest) throws CouponSystemException {
+		CompanyFacade company;
+		
+		try {
+			company = (CompanyFacade) httpServletRequest.getSession(false).getAttribute("userFacade");
+		}
+		catch (Exception e) {
+			throw new CouponSystemException("You must log in as an Company for this operation");
+		}		
+		
+		return delegateStub.getAllCompanyIncome(company.getId()).toArray(new Income[0]);
+	}
 	
 	
 }

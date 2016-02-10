@@ -35,6 +35,10 @@
 	                    <li role="separator" class="divider"></li>
 	                    <li><a ui-sref="newCustomer">Add Customer</a></li>
 	                    <li><a ui-sref="newCompany">Add Company</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a ui-sref="reportAllInvoices">Report Invoices (ALL)</a></li>
+	                    <li><a ui-sref="reportInvoicesByCustomer">Report Invoices (By Customer)</a></li>
+	                    <li><a ui-sref="reportInvoicesByCompany">Report Invoices (By Company)</a></li>
 	                  </ul>
 	                </li>
                 </ul>
@@ -46,6 +50,8 @@
 	                    <li><a ui-sref="company-coupons">List Coupons</a></li>
 	                    <li role="separator" class="divider"></li>
 	                    <li><a ui-sref="newCoupon">Add Coupon</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a ui-sref="reportCompanyInvoices">Invoices Report</a></li>
 	                  </ul>
 	                </li>
                 </ul>
@@ -57,6 +63,8 @@
 	                    <li><a ui-sref="customer-coupons">List My Coupons</a></li>
 	                    <li role="separator" class="divider"></li>
 	                    <li><a ui-sref="purchaseCoupon">Purchase Coupon</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a ui-sref="reportCustomerInvoices">Invoices Report</a></li>
 	                  </ul>
 	                </li>
                 </ul>
@@ -84,6 +92,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-cookies.min.js"></script>
     <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 <!--     https://github.com/paulyoder/angular-bootstrap-show-errors -->
     <script type="text/javascript" src="coupon.web/js/showErrors.min.js"></script>
     <script type="text/javascript" src="coupon.web/js/uploader.js"></script>

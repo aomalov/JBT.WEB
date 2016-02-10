@@ -222,36 +222,11 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       $scope.coupon=CompanyCoupon.get({id:$stateParams.id});
   };
   
-//  $scope.btn_uploadRemove = function() {
-//      $log.info('deleting files');
-//      uiUploader.removeAll();
-//      $scope.files=[];
-//  };
-//
-//  $scope.btn_doUpload = function() {
-//      $log.info('uploading...');
-//      uiUploader.startUpload({
-//          url: 'coupon.web/rest/company/coupons/'+$scope.coupon.id+'/imgupload',
-//          headers: {
-//              'Accept': 'application/json'
-//          },
-//          concurrency: 2,
-//          onProgress: function(file) {
-//              $log.info(file.name + '=' + file.humanSize);
-//              $scope.$apply();
-//          },
-//          onCompleted: function(file, response) {
-//              $log.info(file + 'response' + response);
-//          }
-//      });
-//  };
-//  
   $scope.files = [];
   $scope.$on("fileSelected", function (event, args) {
 	    $scope.$apply(function () {            
 	        //add the file object to the scope's files collection
 	        $scope.files.push(args.file);
-//	        uiUploader.addFiles($scope.files);
 	    });
   });
 
@@ -326,6 +301,58 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
   }
 
 })
+//REPORTING controllers
+.controller('InvoicesSimpleReportController',function($scope,$state, $http, restResponseService){
+
+	$scope.adminMode = ($state.current.data) ? $state.current.data.adminMode : false ;
+	
+	$scope.timestampConvert = function(ts) {
+		return moment(ts).format("DD-MM-YYYY HH:mm:ss");
+	};
+	
+    $http.get('coupon.web/rest'+$state.current.url)
+      .then(function(response){
+    	      $scope.reportInvoices = response.data;
+            },function(errResponse) {
+          	  console.log(errResponse.data);
+        	  restResponseService.applyAlert(errResponse.data,$scope);
+            });
+
+}).controller('InvoicesByPartyReportController',function($scope,$state, $http, Customer, Company, restResponseService){
+
+	$scope.adminMode = ($state.current.data) ? $state.current.data.adminMode : false ;
+	
+	$scope.timestampConvert = function(ts) {
+		return moment(ts).format("DD-MM-YYYY HH:mm:ss");
+	};
+
+	if($state.current.data.party=="customer")
+		Customer.query(function(result) {
+			  $scope.customers=result;
+	     }, function(response) {
+	   	  console.log(response.data);
+	   	  restResponseService.applyAlert(response.data,$scope);
+	     });
+	else if($state.current.data.party=="company")
+		Company.query(function(result) {
+			  $scope.companies=result;
+	     }, function(response) {
+	   	  console.log(response.data);
+	   	  restResponseService.applyAlert(response.data,$scope);
+	     });
+	
+	$scope.runReport = function() {
+	    $http.get('coupon.web/rest'+$state.current.url+'/'+ $scope.selectedId )
+	      .then(function(response){
+	    	      $scope.reportInvoices = response.data;
+	            },function(errResponse) {
+	          	  console.log(errResponse.data);
+	        	  restResponseService.applyAlert(errResponse.data,$scope);
+	            });
+	}
+
+})
+
 // GENERAL PURPOSE controllers
 .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, theQuestion) {
 
