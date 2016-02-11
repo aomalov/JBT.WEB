@@ -206,7 +206,7 @@ angular.module('testRest.controllers',[]).controller('LoginController',function(
       });
   }
 
-}).controller('CouponEditController',function($scope,$state,$stateParams,$log,CompanyCoupon,restResponseService,uiUploader){
+}).controller('CouponEditController',function($scope,$state,$stateParams,$log,CompanyCoupon,restResponseService){
 
   $scope.updateCoupon=function(){
 	  console.log($scope.coupon);
