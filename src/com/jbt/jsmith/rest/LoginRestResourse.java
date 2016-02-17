@@ -21,6 +21,7 @@ import com.jbt.jsmith.CouponSystem;
 import com.jbt.jsmith.CouponSystem.ClientType;
 import com.jbt.jsmith.CouponSystemException;
 import com.jbt.jsmith.facade.CouponClientFacade;
+import com.jbt.jsmith.rest.beans.UserWrapper;
 
 /**
  * @author andrew

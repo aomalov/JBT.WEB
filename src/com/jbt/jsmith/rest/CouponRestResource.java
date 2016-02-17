@@ -29,7 +29,7 @@ import com.jbt.ejb.delegate.IncomeDelegate;
 import com.jbt.jsmith.CouponSystemException;
 import com.jbt.jsmith.dto.Coupon;
 import com.jbt.jsmith.facade.CompanyFacade;
-
+import com.jbt.jsmith.rest.beans.FileUploadForm;
 import com.jbt.ejb.beans.OperationType;
 
 

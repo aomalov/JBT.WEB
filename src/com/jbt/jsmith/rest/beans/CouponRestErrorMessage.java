@@ -1,14 +1,13 @@
 /**
  * 
  */
-package com.jbt.jsmith.rest;
+package com.jbt.jsmith.rest.beans;
 
 /**
  * @author andrewm
  *
  *Error class utility - translation to JSON to web client
  */
-//@XmlRootElement(name="CouponRestErrorMessage")
 public class CouponRestErrorMessage {
 	
 	String messageText;
@@ -20,7 +19,6 @@ public class CouponRestErrorMessage {
 		this.messageType = messageType;
 	}
 
-//	@XmlElement
 	public String getMessageText() {
 		return messageText;
 	}
@@ -32,7 +30,6 @@ public class CouponRestErrorMessage {
 	/**
 	 * @return the messageType
 	 */
-//	@XmlElement
 	public String getMessageType() {
 		return messageType;
 	}
@@ -48,7 +45,6 @@ public class CouponRestErrorMessage {
 	 * 
 	 */
 	public CouponRestErrorMessage() {
-		// TODO Auto-generated constructor stub
 	}
 
 }

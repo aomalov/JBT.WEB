@@ -1,4 +1,4 @@
-package com.jbt.jsmith.rest;
+package com.jbt.jsmith.rest.beans;
 
 import javax.ws.rs.FormParam;
 

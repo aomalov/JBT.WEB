@@ -1,10 +1,10 @@
-package com.jbt.jsmith.rest;
+package com.jbt.jsmith.rest.beans;
 
 /**
  * 
  * @author andrewm
  *
- * Wrapper class for JSON data binging: getting user credentials in a POST request from the client
+ * Wrapper class for JSON data binding: getting user credentials in a POST request from the client
  * 
  */
 public class UserWrapper {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.jbt.jsmith.rest;
+package com.jbt.jsmith.rest.exceptions;
 
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
@@ -9,6 +9,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import com.jbt.jsmith.CouponSystemException;
+import com.jbt.jsmith.rest.beans.CouponRestErrorMessage;
 
 /**
  * @author andrewm
